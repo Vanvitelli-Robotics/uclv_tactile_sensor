@@ -1,6 +1,6 @@
 # uclv_tactile_sensor
 
-ROS 2 packages for the uclv/unicampania force/tactile sensors.
+ROS 2 packages for the unicampania force/tactile sensors.
 
 ## Installation
 
