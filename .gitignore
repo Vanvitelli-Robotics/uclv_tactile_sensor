@@ -1,0 +1,7 @@
+build/
+install/
+log/
+.DS_Store
+.vscode/
+src/uclv_tactile_simulation
+src/serial
