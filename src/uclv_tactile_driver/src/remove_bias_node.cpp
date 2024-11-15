@@ -15,7 +15,7 @@ public:
     ComputeBiasActionServer() : Node("remove_bias"), b_msg_arrived(false), b_can_pub(false) 
     {
         // Parametri di input
-        this->declare_parameter("in_voltage_topic", "tactile_voltage");
+        this->declare_parameter("in_voltage_topic", "tactile_voltage/raw");
         this->declare_parameter("out_voltage_topic", "tactile_voltage/rect");
         this->declare_parameter("action_compute_bias", "tactile_voltage/action_compute_bias");
         this->declare_parameter("default_num_samples", 100);

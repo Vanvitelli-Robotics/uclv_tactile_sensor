@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     node->declare_parameter<int>("cols", 2);
     node->declare_parameter<std::string>("frame_id", "fingertip0");
     node->declare_parameter<std::string>("tf_prefix", "");
-    node->declare_parameter<std::string>("output_topic", "tactile_voltage");
+    node->declare_parameter<std::string>("output_topic", "tactile_voltage/raw");
 
     /**** CHECK PARAMS ****/
     std::string serial_port;
