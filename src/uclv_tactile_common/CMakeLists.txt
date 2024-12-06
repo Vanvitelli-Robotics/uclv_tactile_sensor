@@ -7,8 +7,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-
-# Migrating codes
 find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(action_msgs REQUIRED)
@@ -27,8 +25,6 @@ ament_export_dependencies(
   std_msgs 
   action_msgs
 )
-# End migrating codes
-
 
 # uncomment the following section in order to fill in
 # further dependencies manually.

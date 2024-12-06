@@ -1,0 +1,10 @@
+- 
+  enable_foreign_mappings: true
+  ros1_package_name: 'uclv_tactile_common'
+  ros1_message_name: 'Tactile'
+  ros2_package_name: 'uclv_tactile_common'
+  ros2_message_name: 'Tactile'
+  ros1_package_name: 'uclv_tactile_common'
+  ros1_message_name: 'TactileStamped'
+  ros2_package_name: 'uclv_tactile_common'
+  ros2_message_name: 'TactileStamped'
