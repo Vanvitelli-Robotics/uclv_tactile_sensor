@@ -36,30 +36,23 @@ int main(int argc, char *argv[])
     node->declare_parameter<std::string>("output_topic", "tactile_voltage/raw");
 
     /**** CHECK PARAMS ****/
-    std::string serial_port;
+    std::string serial_port, frame_id, tf_prefix, topic_name;
+    int baud_rate, serial_timeout, num_rows, num_cols;
+
     node->get_parameter("serial_port", serial_port);
-    int baud_rate;
     node->get_parameter("baud_rate", baud_rate);
-    // unsigned long baud;
-    // sscanf(str_baud.c_str(), "%lu", &baud);
-    int serial_timeout;
     node->get_parameter("serial_timeout", serial_timeout);
-    int num_rows;
     node->get_parameter("rows", num_rows);
-    int num_cols;
     node->get_parameter("cols", num_cols);
-    std::string frame_id;
     node->get_parameter("frame_id", frame_id);
-    std::string tf_prefix;
     node->get_parameter("tf_prefix", tf_prefix);
-    std::string topic_name;
     node->get_parameter("output_topic", topic_name);
 
-    /*** INIT SERIAL ****/	
+    /**** INIT SERIAL ****/	
     set_serial_low_latency(serial_port);
     serial::Serial my_serial(serial_port, baud_rate, serial::Timeout::simpleTimeout(serial_timeout));
 
-    /*** CHECK ***/
+    /**** CHECK ****/
     if(!my_serial.isOpen()){
    	    cout << ERROR_COLOR << "ERROR - SERIAL PORT " << WARN_COLOR << serial_port << ERROR_COLOR << " is not open!" << CRESET <<endl;
    	    exit(-1);
@@ -76,20 +69,18 @@ int main(int argc, char *argv[])
     finger_voltages.tactile.cols = num_cols;
     finger_voltages.tactile.info = "voltages";
 
-    // ======= PUBLISHER
+    // PUBLISHER
     auto pubTactile = node->create_publisher<uclv_tactile_common::msg::TactileStamped>(topic_name, 10);
 
-    //init buffers
+    // init buffers
     const int dim_buffer = voltages_count*2;
     uint8_t b2write[1], readBytes[dim_buffer];
-    //size_t bytes_wrote;
     b2write[0] = CHAR_TO_SEND;
 
 
-    //**** ROS MAIN LOOP  ***//
+    /**** ROS MAIN LOOP  ****/
     while(rclcpp::ok())
     {   
-        /*	bytes_wrote = */ 
         my_serial.write(b2write,1);
         my_serial.read(readBytes, dim_buffer);
         finger_voltages.header.stamp = node->get_clock()->now();

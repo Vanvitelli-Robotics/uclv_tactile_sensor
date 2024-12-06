@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-using namespace std;
+
 using ComputeBias = uclv_tactile_common::action::ComputeBias;
 using TactileStamped = uclv_tactile_common::msg::TactileStamped;
 using namespace std::placeholders;
@@ -14,7 +14,7 @@ class ComputeBiasActionServer : public rclcpp::Node {
 public:
     ComputeBiasActionServer() : Node("remove_bias"), b_msg_arrived(false), b_can_pub(false) 
     {
-        // Parametri di input
+        // Input Parameters
         this->declare_parameter("in_voltage_topic", "tactile_voltage/raw");
         this->declare_parameter("out_voltage_topic", "tactile_voltage/rect");
         this->declare_parameter("action_compute_bias", "tactile_voltage/action_compute_bias");
@@ -27,7 +27,7 @@ public:
         this->get_parameter("default_num_samples", default_num_samples_to_use);
         this->get_parameter("num_voltages", NUM_V);
 
-        // Inizializzazione variabili
+        // Initialization variables
         bias.resize(NUM_V, 0.0);
         raw_valtages.resize(NUM_V, 0.0);
 
@@ -46,7 +46,7 @@ public:
         RCLCPP_INFO(this->get_logger(), "Waiting for initial voltages...");
         waitForVoltage();
 
-        // Primo calcolo del bias
+        // First computation of the bias
         while (rclcpp::ok() && !computeBias(default_num_samples_to_use)) {
             RCLCPP_ERROR(this->get_logger(), "Retrying bias computation...");
         }
@@ -55,12 +55,12 @@ public:
 
 private:
 
-    // Variabili e oggetti ROS 2
+    // Attributes
     rclcpp::Publisher<TactileStamped>::SharedPtr pubV;
     rclcpp::Subscription<TactileStamped>::SharedPtr subVoltage;
     rclcpp_action::Server<ComputeBias>::SharedPtr compute_bias_as;
 
-    // Variabili per la gestione del bias
+    // Attributes to manage the bias computation
     std::string in_voltage_topic_str, out_voltage_topic_str, action_compute_bias_str;
     std::vector<float> bias, raw_valtages;
     bool b_msg_arrived, b_can_pub;
@@ -70,7 +70,7 @@ private:
     static constexpr int MAX_WAIT_COUNT = 100;
     static constexpr double TIME_TO_SLEEP_WAITING_SAMPLE = 0.01;
 
-    // Callback di lettura e pubblicazione
+    // Callback to read and publish the voltages
     void readV(const TactileStamped::SharedPtr msg) {
         raw_valtages = msg->tactile.data;
         for (int i = 0; i < NUM_V; i++) {
@@ -82,7 +82,7 @@ private:
         }
     }
 
-    // Routine di calcolo del bias
+    // Compute the bias
     bool computeBias(int num_samples_to_use) {
         std::vector<double> bias_sum(NUM_V, 0.0);
         RCLCPP_INFO(this->get_logger(), "Computing bias...");
@@ -110,7 +110,7 @@ private:
         return true;
     }
 
-    // Callback dell’action server
+    // Callbacks for the action server
     rclcpp_action::GoalResponse handleGoal(const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const ComputeBias::Goal> goal) {
         RCLCPP_INFO(this->get_logger(), "Received goal request with num_samples: %d", goal->num_samples);
         return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
