@@ -54,7 +54,7 @@ It has the following parameters:
 | `voltage_rect_topic` | Output topic for the de-biased voltages | `tactile_voltage/rect` |
 | `action_compute_bias` | Action name that computes the bias* | `tactile_voltage/action_compute_bias` |
 
-*the bias si computed at startup, you can force a new computation calling this action.
+*the bias is computed at startup, you can force a new computation calling this action.
 
 ## License
 
