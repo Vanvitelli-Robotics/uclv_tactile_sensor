@@ -34,12 +34,12 @@ sudo usermod -a -G groupName userName
 
 ## Run the ROS drivers
 
-You can run the driver for read the raw voltages using the launch file:
+You can run the driver to read the raw voltages using the launch file:
 ```bash
 ros2 launch uclv_tactile_driver tactile_serial.py
 ```
 
-You can run the driver for read the debiased voltages using the launch file:
+You can run the driver to read the debiased voltages using the launch file:
 ```bash
 ros2 launch uclv_tactile_driver tactile_serial_debiased.py
 ```
