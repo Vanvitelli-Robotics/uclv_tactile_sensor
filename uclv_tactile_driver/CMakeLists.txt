@@ -5,6 +5,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 
@@ -26,10 +30,6 @@ ament_target_dependencies(remove_bias rclcpp rclcpp_action uclv_tactile_interfac
 
 install(TARGETS
   read_tactile_serial
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(TARGETS
   remove_bias
   DESTINATION lib/${PROJECT_NAME}
 )
