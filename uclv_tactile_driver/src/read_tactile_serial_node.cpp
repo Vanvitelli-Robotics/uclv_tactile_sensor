@@ -1,7 +1,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include "serial/serial.h"
 #include <std_msgs/msg/header.hpp>
-#include "uclv_tactile_common/msg/tactile_stamped.hpp"    
+#include "uclv_tactile_interfaces/msg/tactile_stamped.hpp"    
 
 #define ERROR_COLOR     "\033[1m\033[31m"      /* Bold Red */
 #define WARN_COLOR      "\033[1m\033[33m"      /* Bold Yellow */
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
     // ==== Tactile msg ====
     double voltages_count = num_rows*num_cols;
-    auto finger_voltages = uclv_tactile_common::msg::TactileStamped();
+    auto finger_voltages = uclv_tactile_interfaces::msg::TactileStamped();
     finger_voltages.header.stamp = node->get_clock()->now();
     finger_voltages.header.frame_id = tf_prefix+frame_id;
     finger_voltages.tactile.data.resize(voltages_count);
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     finger_voltages.tactile.info = "voltages";
 
     // PUBLISHER
-    auto pubTactile = node->create_publisher<uclv_tactile_common::msg::TactileStamped>(topic_name, 10);
+    auto pubTactile = node->create_publisher<uclv_tactile_interfaces::msg::TactileStamped>(topic_name, 10);
 
     // init buffers
     const int dim_buffer = voltages_count*2;

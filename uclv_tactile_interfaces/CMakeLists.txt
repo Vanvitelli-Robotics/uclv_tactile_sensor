@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(uclv_tactile_driver)
+project(uclv_tactile_interfaces)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -7,37 +7,28 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(action_msgs REQUIRED)
 
-# Migrating codes
-find_package(rclcpp REQUIRED)
-find_package(rclcpp_action REQUIRED)
-find_package(uclv_tactile_common REQUIRED)
-find_package(serial REQUIRED)
-
-include_directories(
-  include
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Tactile.msg"
+  "msg/TactileStamped.msg"
+  "action/ComputeBias.action"
+  DEPENDENCIES
+  std_msgs
+  action_msgs
 )
 
-add_executable(read_tactile_serial src/read_tactile_serial_node.cpp)
-ament_target_dependencies(read_tactile_serial rclcpp uclv_tactile_common serial)
-
-add_executable(remove_bias src/remove_bias_node.cpp)
-ament_target_dependencies(remove_bias rclcpp rclcpp_action uclv_tactile_common)
-
-install(TARGETS
-  read_tactile_serial
-  DESTINATION lib/${PROJECT_NAME}
+ament_export_dependencies(
+  rosidl_default_runtime 
+  std_msgs 
+  action_msgs
 )
 
-install(TARGETS
-  remove_bias
-  DESTINATION lib/${PROJECT_NAME}
-)
-
-install(DIRECTORY
-  launch
-  DESTINATION share/${PROJECT_NAME}/
-)
+# uncomment the following section in order to fill in
+# further dependencies manually.
+# find_package(<dependency> REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -51,5 +42,9 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-
+# Install launch files.
+# install(DIRECTORY
+#   launch
+#   DESTINATION share/${PROJECT_NAME}/
+# )
 ament_package()

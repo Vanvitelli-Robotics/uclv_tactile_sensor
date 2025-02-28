@@ -1,13 +1,13 @@
 #include "rclcpp/rclcpp.hpp"
-#include "uclv_tactile_common/msg/tactile_stamped.hpp"
-#include "uclv_tactile_common/action/compute_bias.hpp"
+#include "uclv_tactile_interfaces/msg/tactile_stamped.hpp"
+#include "uclv_tactile_interfaces/action/compute_bias.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
 #include <vector>
 #include <string>
 
 
-using ComputeBias = uclv_tactile_common::action::ComputeBias;
-using TactileStamped = uclv_tactile_common::msg::TactileStamped;
+using ComputeBias = uclv_tactile_interfaces::action::ComputeBias;
+using TactileStamped = uclv_tactile_interfaces::msg::TactileStamped;
 using namespace std::placeholders;
 
 class ComputeBiasActionServer : public rclcpp::Node {
@@ -127,7 +127,7 @@ private:
 
     void executeComputeBiasCB(const std::shared_ptr<rclcpp_action::ServerGoalHandle<ComputeBias>> goal_handle) {
         const auto goal = goal_handle->get_goal();
-        auto remove_bias_result = std::make_shared<uclv_tactile_common::action::ComputeBias_Result>();
+        auto remove_bias_result = std::make_shared<uclv_tactile_interfaces::action::ComputeBias_Result>();
         remove_bias_result->success = computeBias(goal->num_samples > 0 ? goal->num_samples : default_num_samples_to_use);
         goal_handle->succeed(remove_bias_result);
     }
