@@ -9,7 +9,7 @@ You need all the pkgs listed in `src/repos.yaml`.
 You can download all the repos using `vcstool`
 ```bash
 # In the src of your ament workspace
-vcs import < uclv_tactile_sensor/src/repos.yaml
+vcs import < uclv_tactile_sensor/repos.yaml
 ```
 
 ## Setup
