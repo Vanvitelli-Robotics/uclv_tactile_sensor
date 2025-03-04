@@ -36,12 +36,12 @@ sudo usermod -a -G groupName userName
 
 You can run the driver to read the raw voltages using the launch file:
 ```bash
-ros2 launch uclv_tactile_driver tactile_serial.py
+ros2 launch uclv_tactile_driver tactile_serial.launch.py
 ```
 
 You can run the driver to read the debiased voltages using the launch file:
 ```bash
-ros2 launch uclv_tactile_driver tactile_serial_debiased.py
+ros2 launch uclv_tactile_driver tactile_serial_debiased.launch.py
 ```
 
 It has the following parameters:
