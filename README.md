@@ -4,7 +4,7 @@ ROS 2 packages for the unicampania force/tactile sensors.
 
 ## Installation
 
-You need all the pkgs listed in `src/repos.yaml`.
+You need all the pkgs listed in `repos.yaml`.
 
 You can download all the repos using `vcstool`
 ```bash
