@@ -47,9 +47,11 @@ public:
         waitForVoltage();
 
         // First computation of the bias
+        done = false;
         while (rclcpp::ok() && !computeBias(default_num_samples_to_use)) {
             RCLCPP_ERROR(this->get_logger(), "Retrying bias computation...");
         }
+        done = true;
         b_can_pub = true;
     }
 
@@ -65,6 +67,8 @@ private:
     std::vector<float> bias, raw_valtages;
     bool b_msg_arrived, b_can_pub;
     int default_num_samples_to_use, NUM_V;
+    //! variable to avoid multiple calls to spin_some
+    bool done;
 
     static constexpr int NUM_SAMPLES_NOT_USE = 10;
     static constexpr int MAX_WAIT_COUNT = 100;
@@ -92,7 +96,8 @@ private:
             int wait_count = 0;
             while (!b_msg_arrived && wait_count < MAX_WAIT_COUNT) {
                 rclcpp::sleep_for(std::chrono::milliseconds(int(TIME_TO_SLEEP_WAITING_SAMPLE * 1000)));
-                rclcpp::spin_some(this->get_node_base_interface());
+                if(!done)
+                    rclcpp::spin_some(this->get_node_base_interface());
                 wait_count++;
             }
             if (!b_msg_arrived) return false;
